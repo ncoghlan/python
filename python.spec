@@ -1539,7 +1539,7 @@ CheckPython() {
   #   aarch64, see upstream bug http://bugs.python.org/issue21131
   WITHIN_PYTHON_RPM_BUILD= \
   LD_LIBRARY_PATH=$ConfDir $ConfDir/python -m test.regrtest \
-    --verbose --findleaks \
+    -wW --findleaks \
     -x test_distutils \
     -x test_readline \
     -x test_socket \
@@ -1547,8 +1547,13 @@ CheckPython() {
     -x test_faulthandler \
     %endif
     %ifarch %{power64} s390 s390x armv7hl aarch64
-    -x test_gdb
+    -x test_gdb \
     %endif
+    %if 0%{?with_rewheel}
+    -x test_ensurepip \
+    -x test_venv \
+    %endif
+    -x test_resource \
 
   echo FINISHED: CHECKING OF PYTHON FOR CONFIGURATION: $ConfName
 
@@ -1801,7 +1806,8 @@ rm -fr %{buildroot}
 %{_includedir}/python%{LDVERSION_optimized}/%{_pyconfig_h}
 
 %{_libdir}/%{py_INSTSONAME_optimized}
-%{_libdir}/libpython3.so.%{scl}
+%{?scl:%{_libdir}/libpython3.so.%{scl}}
+%{!?scl:%{_libdir}/libpython3.so}
 %if 0%{?with_systemtap}
 %{?scl:%dir %{_datadir}/systemtap}
 %{?scl:%dir %{tapsetdir}}

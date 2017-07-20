@@ -1540,7 +1540,7 @@ CheckPython() {
   #   aarch64, see upstream bug http://bugs.python.org/issue21131
   WITHIN_PYTHON_RPM_BUILD= \
   LD_LIBRARY_PATH=$ConfDir $ConfDir/python -m test.regrtest \
-    -wW --findleaks \
+    -wW -j0 \
     -x test_distutils \
     -x test_readline \
     -x test_socket \

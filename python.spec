@@ -66,9 +66,10 @@
 # We mirror this here in order to make it easier to add the -gdb.py hooks.
 # (if these get out of sync, the payload of the libs subpackage will fail
 # and halt the build)
-%global py_SOVERSION %{scl}-1.0
-%global py_INSTSONAME_optimized libpython%{LDVERSION_optimized}.so.%{py_SOVERSION}
-%global py_INSTSONAME_debug     libpython%{LDVERSION_debug}.so.%{py_SOVERSION}
+%{?scl:%global py_SOVERSION .%{scl}-1.0}
+%{!?scl:%global py_SOVERSION ""}
+%global py_INSTSONAME_optimized libpython%{LDVERSION_optimized}.so%{py_SOVERSION}
+%global py_INSTSONAME_debug     libpython%{LDVERSION_debug}.so%{py_SOVERSION}
 
 %global with_debug_build 1
 

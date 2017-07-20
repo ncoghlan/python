@@ -1808,7 +1808,7 @@ rm -fr %{buildroot}
 
 %{_libdir}/%{py_INSTSONAME_optimized}
 %{?scl:%{_libdir}/libpython3.so.%{scl}}
-%{!?scl:%{_libdir}/libpython3.so}
+%{!?scl:%{_libdir}/libpython3.so.}
 %if 0%{?with_systemtap}
 %{?scl:%dir %{_datadir}/systemtap}
 %{?scl:%dir %{tapsetdir}}
